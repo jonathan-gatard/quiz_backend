@@ -46,7 +46,6 @@ app.get('/api/user-group/:uid', (req, res) => {
   });
 });
 
-
 //API to GET data of quiz
 app.get('/api/quiz-data/:userid/:quizid/:period', (req, res) => {
   const { userid, quizid, period } = req.params;
