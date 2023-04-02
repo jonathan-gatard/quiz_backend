@@ -11,7 +11,6 @@ const pool = mysql.createPool({
   database: 'training',
 });
 
-
 //MIDDLEWARES
 app.use(cors({
   origin: '*',
