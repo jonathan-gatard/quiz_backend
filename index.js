@@ -3,6 +3,7 @@ const mysql = require('mysql');
 const cors = require('cors');
 const app = express();
 
+
 //MySQL connection
 const pool = mysql.createPool({
   host: 'localhost',
@@ -10,6 +11,7 @@ const pool = mysql.createPool({
   password: 'JonathanPassWorD',
   database: 'training',
 });
+
 
 //MIDDLEWARES
 app.use(cors({
