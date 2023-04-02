@@ -18,6 +18,7 @@ app.use(cors({
 
 app.use(express.json());
 
+
 //API to GET group_id of user
 app.get('/api/user-group/:uid', (req, res) => {
   const { uid } = req.params;
@@ -43,6 +44,7 @@ app.get('/api/user-group/:uid', (req, res) => {
     res.status(200).send(results);
   });
 });
+
 
 //API to GET data of quiz
 app.get('/api/quiz-data/:userid/:quizid/:period', (req, res) => {
@@ -74,6 +76,7 @@ WHERE
     res.status(200).send(results);
   });
 });
+
 
 //API to GET infos of quiz
 app.get('/api/quiz-infos/:groupid/:userid', (req, res) => {
@@ -110,6 +113,7 @@ GROUP BY
   });
 });
 
+
 //API to GET quiz questions
 app.get('/api/quiz-questions/:quizid', (req, res) => {
   const { quizid } = req.params;
@@ -129,6 +133,7 @@ app.get('/api/quiz-questions/:quizid', (req, res) => {
     res.status(200).send(results);
   });
 });
+
 
 //API to POST result
 app.post('/api/save', (req, res) => {
@@ -150,6 +155,7 @@ app.post('/api/save', (req, res) => {
     }
   );
 });
+
 
 //API to GET user history
 app.get('/api/history/:uid', (req, res) => {
@@ -188,6 +194,7 @@ app.get('/api/history/:uid', (req, res) => {
     res.status(200).send(results);
   });
 });
+
 
 //SEERVER
 app.listen(4000, () => {
