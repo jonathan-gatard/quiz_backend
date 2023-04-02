@@ -19,7 +19,6 @@ app.use(cors({
 
 app.use(express.json());
 
-
 //API to GET group_id of user
 app.get('/api/user-group/:uid', (req, res) => {
   const { uid } = req.params;
