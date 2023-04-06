@@ -5,7 +5,6 @@ pipeline {
             steps {
                 script {
                     sshagent(['1c4499aa-ab4c-47ad-86d7-65d364959d66']) {
-                        sh "ssh jonathan@localhost 'cd /srv'"
                         sh "ssh jonathan@localhost 'docker-compose build quiz_backend'"
                     }
                 }
@@ -15,7 +14,6 @@ pipeline {
             steps {
                 script {
                     sshagent(['1c4499aa-ab4c-47ad-86d7-65d364959d66']) {
-                        sh "ssh jonathan@localhost 'cd /srv'"
                         sh "ssh jonathan@localhost 'docker-compose up -d quiz_backend'"
                     }
                 }
