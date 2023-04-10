@@ -84,26 +84,39 @@ WHERE
 app.get('/api/quiz-infos/:groupid/:userid', (req, res) => {
   const { userid, groupid } = req.params;
   let query = `
+  WITH latest_quiz AS (
+    SELECT
+      training.results.quiz_id,
+      MAX(training.results.timestamp) AS max_timestamp
+    FROM
+      training.results
+    WHERE
+      training.results.user_id = ?
+    GROUP BY
+      training.results.quiz_id
+  )
+  
   SELECT
-  training.quiz.id AS "quiz_id",
-  training.quiz.name AS "quiz_name",
-  MAX(training.results.score) AS "quiz_score",
-  MAX(training.results.timestamp) AS "quiz_timestamp"
-FROM
-  training.quiz
-LEFT JOIN
-  training.results ON training.quiz.id = training.results.quiz_id
-JOIN
-  training.users_groups ON training.quiz.group_id = users_groups.group_id
-JOIN
-  training.users ON users_groups.user_id = users.id
-WHERE
-  users.id = ? AND training.quiz.group_id = ?
-GROUP BY
-  training.quiz.id, training.quiz.name
+    training.quiz.id AS "quiz_id",
+    training.quiz.name AS "quiz_name",
+    training.results.score AS "quiz_score",
+    training.results.timestamp AS "quiz_timestamp"
+  FROM
+    training.quiz
+  LEFT JOIN
+    latest_quiz ON training.quiz.id = latest_quiz.quiz_id
+  LEFT JOIN
+    training.results ON training.quiz.id = training.results.quiz_id AND latest_quiz.max_timestamp = training.results.timestamp AND training.results.user_id = ?
+  JOIN
+    training.users_groups ON training.quiz.group_id = training.users_groups.group_id
+  JOIN
+    training.users ON training.users_groups.user_id = training.users.id
+  WHERE
+    training.users.id = ? AND training.quiz.group_id = ?;
+  ;
 `;
 
-  pool.query(query, [userid, groupid], (err, results, fields) => {
+  pool.query(query, [userid, userid, userid, groupid], (err, results, fields) => {
     if (err) {
       console.error("Erreur lors de l'exécution de la requête :", err);
       return res.status(500).send();
