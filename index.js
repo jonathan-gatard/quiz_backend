@@ -79,7 +79,6 @@ WHERE
   });
 });
 
-
 //API to GET infos of quiz
 app.get('/api/quiz-infos/:groupid/:userid', (req, res) => {
   const { userid, groupid } = req.params;
