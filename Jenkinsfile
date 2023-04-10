@@ -3,7 +3,11 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git branch: 'master', url: 'https://github.com/jonathan-gatard/quiz_backend.git'
+                script {
+                    sshagent(['1c4499aa-ab4c-47ad-86d7-65d364959d66']) {
+                        sh "ssh jonathan@localhost 'cd /srv/ && git clone https://github.com/jonathan-gatard/quiz_backend.git'"
+                    }
+                }
             }
         }
         stage('Build') {
